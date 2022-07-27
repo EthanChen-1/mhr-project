@@ -1,2 +1,3 @@
 # mhr-project
-Monster Hunter Profile 
+Monster Hunter Rise profile project
+
