@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,17 +21,29 @@ public class WeaponController {
     }
 
     @GetMapping
-    public ResponseEntity<Weapon> getAllWeapons(){
+    public ResponseEntity<Iterable<Weapon>> getAllWeapons(){
         Iterable<Weapon> allWeapons = weaponService.getAllWeapons();
+        System.out.println(allWeapons);
         return new ResponseEntity(allWeapons, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Weapon>> getWeaponByID(@PathVariable Long id){
-        Optional<Weapon> weaponById = weaponService.getWeaponById(id);
+    public ResponseEntity<Weapon> getWeaponByID(@PathVariable Long id){
+        Weapon weaponById = weaponService.getWeaponById(id);
         if(weaponById == null){
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity(weaponById, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Void> addNewWeapon(@RequestBody Weapon weapon){
+        try{
+            weaponService.addNewWeapon(weapon);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e){
+            System.out.println(e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 }
