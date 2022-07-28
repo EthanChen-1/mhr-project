@@ -7,9 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-
 @RestController
 @RequestMapping(path = "/weapon")
 public class WeaponController {
@@ -23,7 +20,6 @@ public class WeaponController {
     @GetMapping
     public ResponseEntity<Iterable<Weapon>> getAllWeapons(){
         Iterable<Weapon> allWeapons = weaponService.getAllWeapons();
-        System.out.println(allWeapons);
         return new ResponseEntity(allWeapons, HttpStatus.OK);
     }
 
